@@ -20,8 +20,12 @@
             --text-color: #ffffff;
             --text-muted: #a0a8b9;
             --primary-color: #4f8cff;
+            
+            /* ألوان السوشال ميديا */
             --youtube-color: #ff0033;
             --insta-gradient: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
+            --tiktok-color: #ff0050;
+            --telegram-color: #0088cc;
         }
 
         * {
@@ -293,6 +297,29 @@
             box-shadow: 0 6px 20px rgba(225, 48, 108, 0.4);
         }
 
+        /* زر تيك توك */
+        .btn-tiktok { 
+            background: linear-gradient(135deg, #010101, #25f4ee, #fe2c55); 
+            background-size: 200% 200%;
+            animation: gradientTikTok 3s ease infinite;
+        }
+        .btn-tiktok:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 6px 20px rgba(254, 44, 85, 0.4);
+        }
+        @keyframes gradientTikTok {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* زر تيليجرام */
+        .btn-telegram { background: var(--telegram-color); }
+        .btn-telegram:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 136, 204, 0.4);
+        }
+
         /* عند تغيير اللغة، عكس اتجاه الأيقونات */
         [dir="ltr"] .btn-main i { margin-left: 0; margin-right: 10px; }
         [dir="ltr"] .modal-close { left: auto; right: 15px; }
@@ -331,18 +358,31 @@
         </footer>
     </div>
 
-    <!-- النافذة المنبثقة -->
+    <!-- النافذة المنبثقة (Popup Modal) -->
     <div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
         <div class="modal-content">
             <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
             <div class="modal-title" id="modalTitle">حساباتي الرسمية</div>
             
             <div class="links-container">
+                <!-- يوتيوب -->
                 <a href="https://youtube.com/@shadowvoidsv?si=E8ScmrCVUzGjOUAo" target="_blank" class="btn-social btn-youtube">
                     <i class="fab fa-youtube"></i> <span id="ytText">قناتي على يوتيوب</span>
                 </a>
+                
+                <!-- إنستقرام -->
                 <a href="https://www.instagram.com/23x5x09?igsh=emFma3p0OGV5MjZy" target="_blank" class="btn-social btn-insta">
                     <i class="fab fa-instagram"></i> <span id="instaText">حسابي في إنستغرام</span>
+                </a>
+
+                <!-- تيك توك -->
+                <a href="https://www.tiktok.com/@67.aqeel?_r=1&_d=f02mim7a48e2la&sec_uid=MS4wLjABAAAAiCsit-dFFDWkl-MJyf2_pYlcdLx8LKDeQ4BN9swqLDOoiRVqiaTt1cwSiL0YhNw4&share_author_id=7399641531939865607&sharer_language=ar&source=h5_m&u_code=eff2l3bfmdeg5d&timestamp=1784372979&user_id=7399641531939865607&sec_user_id=MS4wLjABAAAAiCsit-dFFDWkl-MJyf2_pYlcdLx8LKDeQ4BN9swqLDOoiRVqiaTt1cwSiL0YhNw4&item_author_type=1&utm_source=copy&utm_campaign=client_share&utm_medium=android&share_iid=7614597615162099477&share_link_id=6d8fd143-4c94-42c4-b0af-9679a97afe55&share_app_id=1233&ugbiz_name=ACCOUNT&ug_btm=b8727%2Cb7360&social_share_type=5&enable_checksum=1" target="_blank" class="btn-social btn-tiktok">
+                    <i class="fab fa-tiktok"></i> <span id="tiktokText">حسابي في تيك توك</span>
+                </a>
+
+                <!-- تيليجرام -->
+                <a href="https://t.me/a_8ch_nnel" target="_blank" class="btn-social btn-telegram">
+                    <i class="fab fa-telegram-plane"></i> <span id="telegramText">قناتي في تيليجرام</span>
                 </a>
             </div>
         </div>
@@ -372,8 +412,11 @@
             const desc = document.getElementById('welcomeDesc');
             const mainBtnText = document.getElementById('mainBtnText');
             const modalTitle = document.getElementById('modalTitle');
+            
             const ytText = document.getElementById('ytText');
             const instaText = document.getElementById('instaText');
+            const tiktokText = document.getElementById('tiktokText');
+            const telegramText = document.getElementById('telegramText');
             const footerText = document.getElementById('footerText');
 
             if (currentLang === 'ar') {
@@ -384,8 +427,12 @@
                 desc.innerText = 'Welcome! Here you can access all my official accounts and follow my latest work.';
                 mainBtnText.innerText = 'My Accounts';
                 modalTitle.innerText = 'My Official Accounts';
+                
                 ytText.innerText = 'My YouTube Channel';
                 instaText.innerText = 'My Instagram Account';
+                tiktokText.innerText = 'My TikTok Account';
+                telegramText.innerText = 'My Telegram Channel';
+                
                 footerText.innerText = '© 2026 All Rights Reserved to Aqeel';
                 currentLang = 'en';
             } else {
@@ -396,8 +443,12 @@
                 desc.innerText = 'أهلاً بك! هنا يمكنك الوصول إلى جميع حساباتي الرسمية ومتابعة جديد أعمالي.';
                 mainBtnText.innerText = 'حساباتي';
                 modalTitle.innerText = 'حساباتي الرسمية';
+                
                 ytText.innerText = 'قناتي على يوتيوب';
                 instaText.innerText = 'حسابي في إنستغرام';
+                tiktokText.innerText = 'حسابي في تيك توك';
+                telegramText.innerText = 'قناتي في تيليجرام';
+                
                 footerText.innerText = '© 2026 جميع الحقوق محفوظة لـ Aqeel';
                 currentLang = 'ar';
             }
