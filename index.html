@@ -6,26 +6,32 @@
     <title>موقع عقيل الرسمي | Aqeel</title>
     <!-- استدعاء أيقونات FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- استدعاء خط Cairo وتأثيراته من جوجل -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --bg-color: #04070d; /* خلفية أغمق للفخامة */
+            --bg-color: #04070d;
             --card-bg: #101624;
             --text-color: #ffffff;
             --text-muted: #a1a7b3;
             --primary-color: #3b82f6;
             --youtube-color: #ff0000;
             --insta-color: #e1306c;
-            /* ألوان التوهج الناعم */
-            --youtube-glow: rgba(255, 0, 0, 0.3);
-            --insta-glow: rgba(225, 48, 108, 0.3);
-            --primary-glow: rgba(59, 130, 246, 0.3);
+            /* ألوان التوهج */
+            --youtube-glow: rgba(255, 0, 0, 0.4);
+            --insta-glow: rgba(225, 48, 108, 0.4);
+            --primary-glow: rgba(59, 130, 246, 0.5);
+            --text-glow: rgba(59, 130, 246, 0.35);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Cairo', 'Segoe UI', Roboto, sans-serif;
             transition: all 0.3s ease-out;
         }
 
@@ -110,11 +116,13 @@
             z-index: -1;
         }
 
+        /* تعديل الخطوط والتوهج الناعم المطلوبة */
         h1 {
-            font-size: 1.9rem;
+            font-size: 2rem;
             margin-bottom: 12px;
             font-weight: 800;
             letter-spacing: -0.5px;
+            text-shadow: 0 0 10px var(--text-glow);
         }
 
         p {
@@ -125,55 +133,154 @@
             padding: 0 10px;
         }
 
-        .links-container {
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
+        .main-btn-container {
             margin-bottom: 40px;
         }
 
-        .btn {
+        /* زر حساباتي الرئيسي المتوهج */
+        .btn-main {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 40px;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #2563eb, #3b82f6);
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 4px 20px var(--primary-glow);
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+        }
+
+        .btn-main i {
+            margin-left: 10px;
+        }
+        [dir="ltr"] .btn-main i {
+            margin-left: 0;
+            margin-right: 10px;
+        }
+
+        .btn-main:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 8px 25px var(--primary-glow);
+        }
+
+        /* تصميم النافذة المنبثقة (Popup Modal) */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(4, 7, 13, 0.85);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            border-radius: 24px;
+            padding: 35px 30px;
+            width: 90%;
+            max-width: 380px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transform: scale(0.7);
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: none;
+            color: var(--text-muted);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1rem;
+        }
+        [dir="ltr"] .modal-close {
+            left: auto;
+            right: 15px;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            text-shadow: 0 0 10px var(--text-glow);
+        }
+
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .btn-social {
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 16px;
+            padding: 15px;
             border-radius: 14px;
             text-decoration: none;
             color: white;
             font-weight: 700;
             font-size: 1.1rem;
-            border: 1px solid transparent;
-            position: relative;
         }
 
-        /* أيقونات داخل الأزرار */
-        .btn i {
+        .btn-social i {
             font-size: 1.3rem;
-            margin-left: 12px; /* مسافة للأيقونة في الوضع العربي */
+            margin-left: 12px;
         }
         
-        [dir="ltr"] .btn i {
+        [dir="ltr"] .btn-social i {
             margin-left: 0;
-            margin-right: 12px; /* مسافة للأيقونة في الوضع الإنجليزي */
+            margin-right: 12px;
         }
 
-        /* زر يوتيوب */
         .btn-youtube {
             background-color: var(--youtube-color);
         }
-        
-        /* توهج ناعم لليوتيوب عند الحوم */
         .btn-youtube:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 20px var(--youtube-glow);
         }
 
-        /* زر انستاغرام */
         .btn-insta {
             background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
         }
-        
-        /* توهج ناعم للانستا عند الحوم */
         .btn-insta:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 20px var(--insta-glow);
@@ -194,7 +301,7 @@
         <!-- زر تغيير اللغة -->
         <button class="lang-btn" id="langToggle" onclick="toggleLanguage()">English</button>
 
-        <!-- الصورة الرمزية مع تأثير خلفي ناعم -->
+        <!-- الصورة الرمزية -->
         <div class="avatar">
             <div class="avatar-glow"></div>
             👑
@@ -204,55 +311,91 @@
         <h1 id="welcomeTitle">مرحباً بك في عالمي</h1>
         <p id="welcomeDesc">أهلاً بك في موقعي المتواضع. يمكنك من هنا الوصول إلى حساباتي الرسمية ومتابعة كل جديد أقدمه.</p>
 
-        <!-- أزرار روابط قنواتك -->
-        <div class="links-container">
-            <a href="https://youtube.com/@shadowvoidsv?si=E8ScmrCVUzGjOUAo" target="_blank" class="btn btn-youtube" id="ytBtn">
-                <i class="fab fa-youtube"></i> <span id="ytText">قناتي على يوتيوب</span>
-            </a>
-            <a href="https://www.instagram.com/23x5x09?igsh=emFma3p0OGV5MjZy" target="_blank" class="btn btn-insta" id="instaBtn">
-                <i class="fab fa-instagram"></i> <span id="instaText">حسابي في إنستغرام</span>
-            </a>
+        <!-- زر حساباتي الرئيسي الذي يقوم بفتح الانبثاق -->
+        <div class="main-btn-container">
+            <button class="btn-main" id="mainBtn" onclick="openModal()">
+                <i class="fa-solid fa-layer-group"></i> <span id="mainBtnText">حساباتي</span>
+            </button>
         </div>
 
-        <!-- الحقوق باسمك -->
+        <!-- الحقوق في الأسفل -->
         <footer>
-            <span id="footerText">جميع الحقوق محفوظة © لـ عَقيل</span>
+            <span id="footerText">جميع الحقوق محفوظة © لـ Aqeel</span>
         </footer>
+    </div>
+
+    <!-- النافذة المنبثقة (Popup Modal) -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-title" id="modalTitle">حساباتي الرسمية</div>
+            
+            <div class="links-container">
+                <a href="https://youtube.com/@shadowvoidsv?si=E8ScmrCVUzGjOUAo" target="_blank" class="btn-social btn-youtube">
+                    <i class="fab fa-youtube"></i> <span id="ytText">قناتي على يوتيوب</span>
+                </a>
+                <a href="https://www.instagram.com/23x5x09?igsh=emFma3p0OGV5MjZy" target="_blank" class="btn-social btn-insta">
+                    <i class="fab fa-instagram"></i> <span id="instaText">حسابي في إنستغرام</span>
+                </a>
+            </div>
+        </div>
     </div>
 
     <script>
         let currentLang = 'ar';
 
+        // دالة فتح النافذة المنبثقة
+        function openModal() {
+            document.getElementById('modalOverlay').classList.add('active');
+        }
+
+        // دالة إغلاق النافذة المنبثقة
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('active');
+        }
+
+        // إغلاق عند الضغط بالخارج
+        function closeModalOutside(e) {
+            if (e.target.id === 'modalOverlay') {
+                closeModal();
+            }
+        }
+
+        // دالة تغيير اللغة الكاملة بدون أخطاء
         function toggleLanguage() {
             const html = document.documentElement;
             const btn = document.getElementById('langToggle');
             const title = document.getElementById('welcomeTitle');
             const desc = document.getElementById('welcomeDesc');
+            const mainBtnText = document.getElementById('mainBtnText');
+            const modalTitle = document.getElementById('modalTitle');
             const ytText = document.getElementById('ytText');
             const instaText = document.getElementById('instaText');
             const footerText = document.getElementById('footerText');
 
             if (currentLang === 'ar') {
-                // التحويل إلى الإنجليزية
                 html.setAttribute('lang', 'en');
                 html.setAttribute('dir', 'ltr');
                 btn.innerText = 'العربية';
                 title.innerText = 'Welcome to My World';
                 desc.innerText = 'Welcome to my humble website. From here you can access my official accounts and follow everything new I offer.';
+                mainBtnText.innerText = 'My Accounts';
+                modalTitle.innerText = 'Official Accounts';
                 ytText.innerText = 'My YouTube Channel';
                 instaText.innerText = 'My Instagram Account';
                 footerText.innerText = 'All Rights Reserved © Aqeel';
                 currentLang = 'en';
             } else {
-                // العودة للعربية
                 html.setAttribute('lang', 'ar');
                 html.setAttribute('dir', 'rtl');
                 btn.innerText = 'English';
                 title.innerText = 'مرحباً بك في عالمي';
                 desc.innerText = 'أهلاً بك في موقعي المتواضع. يمكنك من هنا الوصول إلى حساباتي الرسمية ومتابعة كل جديد أقدمه.';
+                mainBtnText.innerText = 'حساباتي';
+                modalTitle.innerText = 'حساباتي الرسمية';
                 ytText.innerText = 'قناتي على يوتيوب';
                 instaText.innerText = 'حسابي في إنستغرام';
-                footerText.innerText = 'جميع الحقوق محفوظة © لـ عَقيل';
+                footerText.innerText = 'جميع الحقوق محفوظة © لـ Aqeel';
                 currentLang = 'ar';
             }
         }
