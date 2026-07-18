@@ -3,232 +3,208 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>موقع عقيل الرسمي | Aqeel</title>
+    <title>Aqeel | Official Site</title>
     <!-- استدعاء أيقونات FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- استدعاء خط Cairo وتأثيراته من جوجل -->
+    <!-- استدعاء خط Cairo -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
     
     <style>
+        /* إعدادات الألوان */
         :root {
-            --bg-color: #04070d;
-            --card-bg: #101624;
+            --bg-color: #0b101d;
+            --glass-bg: rgba(255, 255, 255, 0.04);
+            --glass-border: rgba(255, 255, 255, 0.08);
             --text-color: #ffffff;
-            --text-muted: #a1a7b3;
-            --primary-color: #3b82f6;
-            --youtube-color: #ff0000;
-            --insta-color: #e1306c;
-            /* ألوان التوهج */
-            --youtube-glow: rgba(255, 0, 0, 0.4);
-            --insta-glow: rgba(225, 48, 108, 0.4);
-            --primary-glow: rgba(59, 130, 246, 0.5);
-            --text-glow: rgba(59, 130, 246, 0.35);
+            --text-muted: #a0a8b9;
+            --primary-color: #4f8cff;
+            --youtube-color: #ff0033;
+            --insta-gradient: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
         }
 
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Cairo', 'Segoe UI', Roboto, sans-serif;
-            transition: all 0.3s ease-out;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            min-height: 100vh;
+            background: var(--bg-color);
+            background-image: radial-gradient(circle at 50% 0%, #1a2744 0%, #0b101d 60%);
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
             padding: 20px;
-            background-image: radial-gradient(circle at center, #1a253a 0%, #04070d 70%);
+            color: var(--text-color);
         }
 
+        /* البطاقة الرئيسية - تصميم زجاجي (Glassmorphism) */
         .card {
-            background-color: var(--card-bg);
-            border-radius: 28px;
-            padding: 40px;
             width: 100%;
-            max-width: 420px;
+            max-width: 400px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 40px 30px;
             text-align: center;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.03);
             position: relative;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
             overflow: hidden;
+            animation: slideUpFade 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(30px);
         }
 
-        /* لمسة علوية جمالية */
+        /* حلقة ضوئية خلف البطاقة */
         .card::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--youtube-color), var(--insta-color), var(--primary-color));
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, var(--primary-color), transparent, var(--youtube-color), transparent);
+            opacity: 0.05;
+            animation: rotateBg 10s linear infinite;
+            z-index: -1;
         }
 
+        /* أنميشن دخول البطاقة */
+        @keyframes slideUpFade {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes rotateBg {
+            to { transform: rotate(360deg); }
+        }
+
+        /* زر اللغة */
         .lang-btn {
-            background-color: rgba(255, 255, 255, 0.05);
-            color: var(--text-color);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 9px 18px;
-            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+            border: 1px solid var(--glass-border);
+            padding: 6px 16px;
+            border-radius: 20px;
             cursor: pointer;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 30px;
-            letter-spacing: 0.5px;
+            font-size: 0.8rem;
+            margin-bottom: 20px;
+            transition: 0.4s;
+            animation: fadeIn 1s 0.2s forwards;
+            opacity: 0;
         }
-
         .lang-btn:hover {
-            background-color: var(--primary-color);
+            color: white;
+            background: var(--primary-color);
             border-color: var(--primary-color);
-            box-shadow: 0 0 12px var(--primary-glow);
+            box-shadow: 0 0 15px rgba(79, 140, 255, 0.4);
+            transform: scale(1.05);
         }
 
+        /* الصورة الشخصية */
+        .avatar-container {
+            margin-bottom: 15px;
+            animation: fadeIn 1s 0.4s forwards;
+            opacity: 0;
+        }
         .avatar {
-            width: 110px;
-            height: 110px;
-            background: #1a2236;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, var(--primary-color), #7b2cbf);
             border-radius: 50%;
-            margin: 0 auto 25px;
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 3rem;
-            color: white;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-            border: 2px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 30px rgba(79, 140, 255, 0.2);
             position: relative;
+            animation: floatAvatar 4s ease-in-out infinite;
         }
-        
-        .avatar-glow {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: inherit;
-            border-radius: 50%;
-            filter: blur(15px);
-            opacity: 0.5;
-            z-index: -1;
+        @keyframes floatAvatar {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
         }
 
-        /* تعديل الخطوط والتوهج الناعم المطلوبة */
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        /* النصوص */
+        .text-content {
+            margin-bottom: 30px;
+        }
         h1 {
             font-size: 2rem;
-            margin-bottom: 12px;
             font-weight: 800;
-            letter-spacing: -0.5px;
-            text-shadow: 0 0 10px var(--text-glow);
+            margin-bottom: 8px;
+            opacity: 0;
+            animation: fadeIn 1s 0.6s forwards;
         }
-
         p {
             color: var(--text-muted);
-            font-size: 1rem;
-            margin-bottom: 35px;
+            font-size: 0.95rem;
             line-height: 1.6;
             padding: 0 10px;
+            opacity: 0;
+            animation: fadeIn 1s 0.8s forwards;
         }
 
-        .main-btn-container {
-            margin-bottom: 40px;
+        /* زر حساباتي الرئيسي */
+        .btn-main-container {
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: fadeIn 1s 1s forwards;
         }
-
-        /* ============================================== */
-        /*  تنسيق زر حساباتي ليبدو مثل الرسمة (Drawn Style) */
-        /* ============================================== */
         .btn-main {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 16px 40px;
-            border-radius: 50px;
-            background: transparent; /* شفاف مثل الرسمة */
-            color: white; /* لون الخط */
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            border: none;
+            border-radius: 16px;
+            color: white;
+            font-size: 1.1rem;
             font-weight: 700;
-            font-size: 1.2rem;
-            text-decoration: none;
             cursor: pointer;
-            border: 4px solid white; /* حد سميك يشبه الرسم */
-            position: relative;
-            /* شكل غير منتظم قليلاً بتدوير الحواف */
-            border-radius: 60% 40% 50% 50% / 45% 55% 45% 55%;
-            /* إزالة الظلال الزرقاء واستبدالها بظل أسود بسيط */
-            box-shadow: none; 
-            text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
-            transition: transform 0.2s ease;
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            gap: 10px;
         }
-
         .btn-main i {
-            margin-left: 10px;
-            font-size: 1.4rem;
+            font-size: 1.2rem;
         }
-        [dir="ltr"] .btn-main i {
-            margin-left: 0;
-            margin-right: 10px;
-        }
-
         .btn-main:hover {
-            transform: scale(1.05); /* تكبير بسيط عند التمرير */
-            border-color: #ffffff;
-            background: rgba(255, 255, 255, 0.05); /* خلفية بيضاء خفيفة جداً عند التمرير */
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 35px rgba(59, 130, 246, 0.5);
+        }
+        .btn-main:active {
+            transform: scale(0.95);
         }
 
-        /* تأثير إضافة عقدة صغيرة (Knot) أعلى الزر مثل الرسمة تماماً */
-        .btn-main::before {
-            content: '';
-            position: absolute;
-            top: -8px;
-            right: 25%; /* موقع العقدة في الأعلى (مثل الصورة) */
-            width: 12px;
-            height: 12px;
-            background-color: transparent;
-            border: 4px solid white;
-            border-radius: 50%;
-            z-index: 2;
-        }
-        
-        /* تعديل موضع العقدة في اللغة الإنجليزية */
-        [dir="ltr"] .btn-main::before {
-            right: auto;
-            left: 25%;
+        /* الفوتر */
+        footer {
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 15px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            opacity: 0;
+            animation: fadeIn 1s 1.2s forwards;
         }
 
-        /* إضافة خط منحني وهمي يخرج من العقدة باتجاه الفقاعة (اختياري، لمحاكاة السهم) */
-        .btn-main::after {
-            content: '';
-            position: absolute;
-            top: -30px;
-            right: 25%;
-            width: 30px;
-            height: 30px;
-            border-top: 4px solid white; /* خط منحني */
-            border-left: 4px solid white;
-            border-radius: 50% 50% 0 0;
-            transform: rotate(-45deg);
-            opacity: 0.8;
-        }
-        [dir="ltr"] .btn-main::after {
-            right: auto;
-            left: 25%;
-            transform: rotate(135deg);
-        }
-
-        /* ============================================== */
-
-        /* تصميم النافذة المنبثقة (Popup Modal) */
+        /* ==== النافذة المنبثقة (Modal) ==== */
         .modal-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(4, 7, 13, 0.85);
-            backdrop-filter: blur(10px);
+            inset: 0;
+            background: rgba(11, 16, 29, 0.8);
+            backdrop-filter: blur(8px);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -237,146 +213,125 @@
             visibility: hidden;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
         .modal-overlay.active {
             opacity: 1;
             visibility: visible;
         }
 
         .modal-content {
-            background-color: var(--card-bg);
+            background: #131b2e;
+            border: 1px solid rgba(255,255,255,0.05);
             border-radius: 24px;
-            padding: 35px 30px;
+            padding: 30px;
             width: 90%;
-            max-width: 380px;
-            text-align: center;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            transform: scale(0.7);
-            position: relative;
+            max-width: 360px;
+            transform: scale(0.8) translateY(20px);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
         }
-
         .modal-overlay.active .modal-content {
-            transform: scale(1);
+            transform: scale(1) translateY(0);
         }
 
         .modal-close {
             position: absolute;
             top: 15px;
             left: 15px;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255,255,255,0.05);
             border: none;
-            color: var(--text-muted);
-            width: 30px;
-            height: 30px;
+            color: #fff;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             cursor: pointer;
+            transition: 0.3s;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 1rem;
         }
-        [dir="ltr"] .modal-close {
-            left: auto;
-            right: 15px;
-        }
-
         .modal-close:hover {
-            background: rgba(255, 255, 255, 0.15);
-            color: #fff;
+            background: #ff0033;
+            transform: rotate(90deg);
         }
 
         .modal-title {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 700;
-            margin-bottom: 25px;
-            text-shadow: 0 0 10px var(--text-glow);
+            margin-bottom: 20px;
         }
 
         .links-container {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 12px;
         }
 
+        /* أزرار السوشال ميديا في النافذة */
         .btn-social {
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 15px;
+            padding: 14px;
             border-radius: 14px;
             text-decoration: none;
             color: white;
-            font-weight: 700;
-            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            gap: 12px;
         }
-
-        .btn-social i {
-            font-size: 1.3rem;
-            margin-left: 12px;
-        }
+        .btn-social i { font-size: 1.3rem; }
         
-        [dir="ltr"] .btn-social i {
-            margin-left: 0;
-            margin-right: 12px;
-        }
-
-        .btn-youtube {
-            background-color: var(--youtube-color);
-        }
+        .btn-youtube { background: var(--youtube-color); }
         .btn-youtube:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px var(--youtube-glow);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 0, 51, 0.4);
         }
 
-        .btn-insta {
-            background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
-        }
+        .btn-insta { background: var(--insta-gradient); }
         .btn-insta:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px var(--insta-glow);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(225, 48, 108, 0.4);
         }
 
-        footer {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            padding-top: 20px;
-        }
-
+        /* عند تغيير اللغة، عكس اتجاه الأيقونات */
+        [dir="ltr"] .btn-main i { margin-left: 0; margin-right: 10px; }
+        [dir="ltr"] .modal-close { left: auto; right: 15px; }
     </style>
 </head>
 <body>
 
     <div class="card">
-        <!-- زر تغيير اللغة -->
+        <!-- زر اللغة -->
         <button class="lang-btn" id="langToggle" onclick="toggleLanguage()">English</button>
 
-        <!-- الصورة الرمزية -->
-        <div class="avatar">
-            <div class="avatar-glow"></div>
-            👑
+        <!-- الصورة الشخصية -->
+        <div class="avatar-container">
+            <div class="avatar">
+                👑
+            </div>
         </div>
 
-        <!-- النصوص والترحيب -->
-        <h1 id="welcomeTitle">مرحباً بك في عالمي</h1>
-        <p id="welcomeDesc">أهلاً بك في موقعي المتواضع. يمكنك من هنا الوصول إلى حساباتي الرسمية ومتابعة كل جديد أقدمه.</p>
+        <!-- النصوص -->
+        <div class="text-content">
+            <h1 id="welcomeTitle">مرحباً بك في عالمي</h1>
+            <p id="welcomeDesc">أهلاً بك! هنا يمكنك الوصول إلى جميع حساباتي الرسمية ومتابعة جديد أعمالي.</p>
+        </div>
 
-        <!-- زر حساباتي الرئيسي المعدل ليبدو كالرسم -->
-        <div class="main-btn-container">
+        <!-- زر حساباتي -->
+        <div class="btn-main-container">
             <button class="btn-main" id="mainBtn" onclick="openModal()">
-                <i class="fa-solid fa-layer-group"></i> <span id="mainBtnText">حساباتي</span>
+                <i class="fa-solid fa-layer-group"></i> 
+                <span id="mainBtnText">حساباتي</span>
             </button>
         </div>
 
-        <!-- الحقوق في الأسفل -->
+        <!-- الفوتر -->
         <footer>
-            <span id="footerText">جميع الحقوق محفوظة © لـ Aqeel</span>
+            <span id="footerText">© 2026 جميع الحقوق محفوظة لـ Aqeel</span>
         </footer>
     </div>
 
-    <!-- النافذة المنبثقة (Popup Modal) -->
+    <!-- النافذة المنبثقة -->
     <div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
         <div class="modal-content">
             <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
@@ -396,24 +351,20 @@
     <script>
         let currentLang = 'ar';
 
-        // دالة فتح النافذة المنبثقة
         function openModal() {
             document.getElementById('modalOverlay').classList.add('active');
         }
 
-        // دالة إغلاق النافذة المنبثقة
         function closeModal() {
             document.getElementById('modalOverlay').classList.remove('active');
         }
 
-        // إغلاق عند الضغط بالخارج
         function closeModalOutside(e) {
             if (e.target.id === 'modalOverlay') {
                 closeModal();
             }
         }
 
-        // دالة تغيير اللغة الكاملة بدون أخطاء
         function toggleLanguage() {
             const html = document.documentElement;
             const btn = document.getElementById('langToggle');
@@ -430,24 +381,24 @@
                 html.setAttribute('dir', 'ltr');
                 btn.innerText = 'العربية';
                 title.innerText = 'Welcome to My World';
-                desc.innerText = 'Welcome to my humble website. From here you can access my official accounts and follow everything new I offer.';
+                desc.innerText = 'Welcome! Here you can access all my official accounts and follow my latest work.';
                 mainBtnText.innerText = 'My Accounts';
-                modalTitle.innerText = 'Official Accounts';
+                modalTitle.innerText = 'My Official Accounts';
                 ytText.innerText = 'My YouTube Channel';
                 instaText.innerText = 'My Instagram Account';
-                footerText.innerText = 'All Rights Reserved © Aqeel';
+                footerText.innerText = '© 2026 All Rights Reserved to Aqeel';
                 currentLang = 'en';
             } else {
                 html.setAttribute('lang', 'ar');
                 html.setAttribute('dir', 'rtl');
                 btn.innerText = 'English';
                 title.innerText = 'مرحباً بك في عالمي';
-                desc.innerText = 'أهلاً بك في موقعي المتواضع. يمكنك من هنا الوصول إلى حساباتي الرسمية ومتابعة كل جديد أقدمه.';
+                desc.innerText = 'أهلاً بك! هنا يمكنك الوصول إلى جميع حساباتي الرسمية ومتابعة جديد أعمالي.';
                 mainBtnText.innerText = 'حساباتي';
                 modalTitle.innerText = 'حساباتي الرسمية';
                 ytText.innerText = 'قناتي على يوتيوب';
                 instaText.innerText = 'حسابي في إنستغرام';
-                footerText.innerText = 'جميع الحقوق محفوظة © لـ Aqeel';
+                footerText.innerText = '© 2026 جميع الحقوق محفوظة لـ Aqeel';
                 currentLang = 'ar';
             }
         }
